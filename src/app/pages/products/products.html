@@ -1,0 +1,89 @@
+<div class="container mt-5">
+
+  <h2 class="mb-4">
+    Productos de Seguros
+  </h2>
+  <button
+    class="btn btn-secondary mb-3"
+    routerLink="/quotation">
+
+    ← Atrás
+
+  </button>
+
+  <div *ngIf="!loading" class="text-center">
+
+    <div class="spinner-border"></div>
+
+    <p>
+      Cargando productos...
+    </p>
+
+  </div>
+
+
+  <div class="row" *ngIf="loading">
+
+
+    <div
+      class="col-md-4 mb-3"
+      *ngFor="let product of products">
+
+
+      <div class="card shadow">
+
+
+        <div class="card-body">
+
+
+          <h5 class="card-title">
+            {{product.name}}
+          </h5>
+
+
+          <p>
+            {{product.description}}
+          </p>
+
+
+          <p>
+            <strong>Prima:</strong>
+
+            <br>
+
+            {{product.minPrice | currency}}
+            -
+            {{product.maxPrice | currency}}
+
+          </p>
+
+
+          <p>
+
+            <strong>Tasa:</strong>
+
+            {{product.rate * 100}}%
+
+          </p>
+
+
+          <a
+            class="btn btn-primary"
+            [routerLink]="['/quotation', product.id]">
+
+            Cotizar
+
+          </a>
+
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+</div>

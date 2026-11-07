@@ -1,0 +1,193 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h4 class="mb-0">
+      Bienvenido - {{username}}
+    </h4>
+
+
+    <button
+      class="btn btn-danger"
+      (click)="logout()">
+
+      Cerrar sesión
+
+    </button>
+
+  </div>
+  <h2>
+    Nueva Cotización
+  </h2>
+
+  <button
+    class="btn btn-secondary mb-3"
+    routerLink="/products">
+
+    Ver productos
+
+  </button>
+
+  <div class="card shadow mt-4">
+
+    <div class="card-body">
+
+
+      <div class="row">
+
+
+        <div class="col-md-6">
+
+          <label>
+            Marca <span class="text-danger">*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="brand">
+
+
+        </div>
+
+
+
+        <div class="col-md-6">
+
+          <label>
+            Modelo <span class="text-danger">*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="model">
+
+
+        </div>
+
+
+        <div class="col-md-4 mt-3">
+
+          <label>
+            Año
+          </label>
+
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="year">
+
+
+        </div>
+
+
+        <div class="col-md-4 mt-3">
+
+          <label>
+            Valor vehículo
+          </label>
+
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="vehicleValue">
+
+
+        </div>
+
+
+
+        <div class="col-md-4 mt-3">
+
+          <label>
+            Cobertura
+          </label>
+
+          <select
+            class="form-control"
+            [(ngModel)]="productId">
+
+
+            <option value="1">
+              Responsabilidad Civil
+            </option>
+
+            <option value="2">
+              Cobertura Básica
+            </option>
+
+            <option value="3">
+              Cobertura Completa
+            </option>
+
+
+          </select>
+
+
+        </div>
+
+
+      </div>
+
+      <p class="text-muted">
+        Los campos marcados con <span class="text-danger">*</span> son obligatorios.
+      </p>
+
+      <button
+        class="btn btn-primary mt-4"
+        (click)="createQuotation()"
+        [disabled]="!brand || !model">
+
+        Generar Cotización
+
+      </button>
+
+
+
+      <div
+        class="alert alert-success mt-4"
+        *ngIf="result">
+
+
+        <h4>
+          Cotización creada
+        </h4>
+
+
+        <p>
+          Referencia:
+          <strong>
+            {{result.reference}}
+          </strong>
+        </p>
+
+
+        <p>
+          Prima estimada:
+
+          <strong>
+            {{result.estimatedPremium | currency}}
+          </strong>
+
+        </p>
+
+
+      </div>
+
+
+
+      <div
+        class="alert alert-danger mt-4"
+        *ngIf="error">
+
+        {{error}}
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+</div>

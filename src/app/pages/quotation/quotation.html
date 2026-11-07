@@ -1,193 +1,160 @@
-<div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-
-    <h4 class="mb-0">
-      Bienvenido - {{username}}
-    </h4>
-
-
-    <button
-      class="btn btn-danger"
-      (click)="logout()">
-
-      Cerrar sesión
-
-    </button>
-
-  </div>
-  <h2>
-    Nueva Cotización
-  </h2>
-
-  <button
-    class="btn btn-secondary mb-3"
-    routerLink="/products">
-
-    Ver productos
-
-  </button>
-
-  <div class="card shadow mt-4">
-
-    <div class="card-body">
-
-
-      <div class="row">
-
-
-        <div class="col-md-6">
-
-          <label>
-            Marca <span class="text-danger">*</span>
-          </label>
-
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="brand">
-
-
-        </div>
-
-
-
-        <div class="col-md-6">
-
-          <label>
-            Modelo <span class="text-danger">*</span>
-          </label>
-
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="model">
-
-
-        </div>
-
-
-        <div class="col-md-4 mt-3">
-
-          <label>
-            Año
-          </label>
-
-          <input
-            type="number"
-            class="form-control"
-            [(ngModel)]="year">
-
-
-        </div>
-
-
-        <div class="col-md-4 mt-3">
-
-          <label>
-            Valor vehículo
-          </label>
-
-          <input
-            type="number"
-            class="form-control"
-            [(ngModel)]="vehicleValue">
-
-
-        </div>
-
-
-
-        <div class="col-md-4 mt-3">
-
-          <label>
-            Cobertura
-          </label>
-
-          <select
-            class="form-control"
-            [(ngModel)]="productId">
-
-
-            <option value="1">
-              Responsabilidad Civil
-            </option>
-
-            <option value="2">
-              Cobertura Básica
-            </option>
-
-            <option value="3">
-              Cobertura Completa
-            </option>
-
-
-          </select>
-
-
-        </div>
-
-
-      </div>
-
-      <p class="text-muted">
-        Los campos marcados con <span class="text-danger">*</span> son obligatorios.
-      </p>
-
-      <button
-        class="btn btn-primary mt-4"
-        (click)="createQuotation()"
-        [disabled]="!brand || !model">
-
-        Generar Cotización
-
+<nav class="navbar bg-white border-bottom shadow-sm">
+  <div class="container">
+    <span class="navbar-brand fw-bold text-primary">🛡️ Seguros Auto</span>
+    <div class="d-flex align-items-center gap-3">
+      <span class="text-muted d-none d-sm-inline">
+        Hola, <strong class="text-dark">{{ username }}</strong>
+      </span>
+      <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+        Cerrar sesión
       </button>
+    </div>
+  </div>
+</nav>
 
+<div class="page-bg">
+  <div class="container py-4 py-md-5">
 
-
-      <div
-        class="alert alert-success mt-4"
-        *ngIf="result">
-
-
-        <h4>
-          Cotización creada
-        </h4>
-
-
-        <p>
-          Referencia:
-          <strong>
-            {{result.reference}}
-          </strong>
-        </p>
-
-
-        <p>
-          Prima estimada:
-
-          <strong>
-            {{result.estimatedPremium | currency}}
-          </strong>
-
-        </p>
-
-
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+      <div>
+        <h2 class="fw-bold mb-1">Nueva cotización</h2>
+        <p class="text-muted mb-0">Completa los datos del vehículo para calcular la prima.</p>
       </div>
-
-
-
-      <div
-        class="alert alert-danger mt-4"
-        *ngIf="error">
-
-        {{error}}
-
-      </div>
-
-
+      <button class="btn btn-outline-secondary" routerLink="/products">
+        Ver productos
+      </button>
     </div>
 
+    <div class="row g-4">
+
+      <!-- Formulario -->
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm quote-card">
+          <div class="card-body p-4">
+
+            <form (ngSubmit)="createQuotation()" #quoteForm="ngForm" novalidate>
+
+              <h6 class="section-title">Datos del vehículo</h6>
+
+              <div class="row g-3">
+
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input id="brand" name="brand" type="text"
+                           class="form-control"
+                           [class.is-invalid]="brandCtrl.invalid && brandCtrl.touched"
+                           placeholder="Marca" required
+                           [(ngModel)]="brand" #brandCtrl="ngModel">
+                    <label for="brand">Marca <span class="text-danger">*</span></label>
+                    <div class="invalid-feedback">La marca es obligatoria.</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input id="model" name="model" type="text"
+                           class="form-control"
+                           [class.is-invalid]="modelCtrl.invalid && modelCtrl.touched"
+                           placeholder="Modelo" required
+                           [(ngModel)]="model" #modelCtrl="ngModel">
+                    <label for="model">Modelo <span class="text-danger">*</span></label>
+                    <div class="invalid-feedback">El modelo es obligatorio.</div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input id="year" name="year" type="number"
+                           class="form-control" placeholder="Año"
+                           min="1990" max="2027"
+                           [(ngModel)]="year">
+                    <label for="year">Año</label>
+                  </div>
+                </div>
+
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <div class="form-floating">
+                      <input id="vehicleValue" name="vehicleValue" type="number"
+                             class="form-control" placeholder="Valor del vehículo"
+                             min="0" step="100"
+                             [(ngModel)]="vehicleValue">
+                      <label for="vehicleValue">Valor del vehículo</label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <h6 class="section-title mt-4">Cobertura</h6>
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="form-floating">
+                    <select id="productId" name="productId"
+                            class="form-select" [(ngModel)]="productId">
+                      <option value="1">Responsabilidad Civil</option>
+                      <option value="2">Cobertura Básica</option>
+                      <option value="3">Cobertura Completa</option>
+                    </select>
+                    <label for="productId">Tipo de cobertura</label>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-muted small mt-3 mb-0">
+                Los campos marcados con <span class="text-danger">*</span> son obligatorios.
+              </p>
+
+              <div class="alert alert-danger d-flex align-items-center mt-4 mb-0"
+                   role="alert" *ngIf="error">
+                <div>{{ error }}</div>
+              </div>
+
+              <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg px-4"
+                        [disabled]="loading || !brand || !model">
+                  <span class="spinner-border spinner-border-sm me-2"
+                        *ngIf="loading"></span>
+                  {{ loading ? 'Calculando...' : 'Generar cotización' }}
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-lg"
+                        (click)="quoteForm.resetForm({ productId: 1 })"
+                        [disabled]="loading">
+                  Limpiar
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm result-card h-100" *ngIf="result; else emptyState">
+          <div class="card-body p-4 text-center d-flex flex-column justify-content-center">
+            <span class="badge text-bg-success align-self-center mb-3">
+              Cotización creada
+            </span>
+            <p class="text-muted mb-1">Prima estimada</p>
+            <div class="premium">{{ result.estimatedPremium | currency }}</div>
+            <hr class="my-4">
+            <p class="text-muted small mb-1">Referencia</p>
+            <code class="fs-6">{{ result.reference }}</code>
+          </div>
+        </div>
+
+        <ng-template #emptyState>
+          <div class="card border-0 shadow-sm h-100 empty-card">
+            <div class="card-body p-4 text-center d-flex flex-column justify-content-center text-muted">
+              <p class="mb-0">Tu cotización aparecerá aquí al generarla.</p>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
   </div>
-
-
 </div>

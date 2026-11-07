@@ -1,0 +1,47 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #0d6efd 0%, #0a2a66 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.brand-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(135deg, #0d6efd, #0a58ca);
+  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4);
+}
+
+.form-control {
+  border-radius: 0.65rem;
+}
+
+.btn-primary {
+  border-radius: 0.65rem;
+  font-weight: 600;
+}
+
+.toggle-pass {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  text-decoration: none;
+  z-index: 5;
+}
+

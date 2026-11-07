@@ -20,6 +20,9 @@ export class Login {
 
   error = '';
 
+  showPassword = false;
+  loading = false;
+
   constructor(
     private authService: AuthService,
     private router: Router
